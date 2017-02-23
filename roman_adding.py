@@ -43,17 +43,34 @@ instance, allowing IIII as well as IV, and even XXXXXX instead of LX.
 
 import sys
 
+ROMAN_DIGITS = 'IVXLCDM'
+
+def check_roman(s):
+    """If 's' is not a roman number, raise a Value Error.
+    """
+    if not all(x in ROMAN_DIGITS for x in s):
+        raise ValueError('{!r} is not a sequence of I, V, X, L, C, D or M'.format(s))
 
 def add(number1, number2):
     """Add two strings representing roman numbers.
 
     For instance:
 
-      >>> add('iv', 'v')
-      'ix'
+      >>> add('IV', 'V')
+      'IX'
 
+    Raises ValueError if the strings contain any characters other than
+    'I', 'V', 'X', 'L', 'C', 'D' or 'M'
     """
-    return number1 + number2
+    check_roman(number1)
+    check_roman(number2)
+
+    sum = number1 + number2
+
+    if sum == 'IIII':
+        sum = 'IV'
+
+    return sum
 
 
 def main(args):
