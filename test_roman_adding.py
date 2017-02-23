@@ -8,11 +8,19 @@ standard library.
 
 import unittest
 
+# Rather than write my own, let's use someone else's function to
+# convert to roman numbers
+from roman import toRoman
+
 from roman_adding import add
 
 
 class TestRomanAdding(unittest.TestCase):
     """Test adding roman numbers.
+
+    This is the "old fashioned" way of using unittests for doing many tests
+    - as you can see, those test_add_<a>_<b> methods would get tedious very
+    quickly.
     """
 
     def test_not_roman_arg1(self):
@@ -31,6 +39,24 @@ class TestRomanAdding(unittest.TestCase):
 
     def test_add_III_I(self):
         self.assertEqual(add('III', 'I'), 'IV')
+
+
+class TestRomanAddingSubTests(unittest.TestCase):
+    """Test adding roman numbers.
+
+    From Python 3.4, unittest adds the ability to add sub tests, which will
+    report all the failures in a loop, without stopping at the first one.
+    This may be more convenient.
+    """
+
+    def test_adding(self):
+
+        for a in [1, 2]:
+            for b in [1, 2]:
+                ar = toRoman(a)
+                br = toRoman(b)
+                with self.subTest(ar=ar, br=br):
+                    self.assertEqual(add(ar, br), toRoman(a+b))
 
 
 if __name__ == '__main__':
