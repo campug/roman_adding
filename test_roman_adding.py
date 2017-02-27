@@ -10,7 +10,7 @@ import unittest
 
 # Rather than write my own, let's use someone else's function to
 # convert to roman numbers
-from roman import toRoman
+from to_roman import to_roman
 
 from roman_adding import add
 
@@ -53,8 +53,8 @@ class TestRomanAddingSubTests(unittest.TestCase):
 
         for a in [1, 2]:
             for b in [1, 2]:
-                ar = toRoman(a)
-                br = toRoman(b)
+                ar = to_roman(a)
+                br = to_roman(b)
                 with self.subTest(ar=ar, br=br):
                     self.assertEqual(add(ar, br), toRoman(a+b))
 
