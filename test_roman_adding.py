@@ -56,7 +56,7 @@ class TestRomanAddingSubTests(unittest.TestCase):
                 ar = to_roman(a)
                 br = to_roman(b)
                 with self.subTest(ar=ar, br=br):
-                    self.assertEqual(add(ar, br), toRoman(a+b))
+                    self.assertEqual(add(ar, br), to_roman(a+b))
 
 
 if __name__ == '__main__':
