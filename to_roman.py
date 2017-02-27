@@ -22,7 +22,7 @@ int_to_roman = (
 )
 
 
-def to_number(number):
+def to_roman(number):
     """Given an integer, return a roman number.
 
     Somewhat arbitrarily, we assume that Romans never counted above 3000,
