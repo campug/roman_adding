@@ -1,0 +1,8 @@
+# Python artefacts
+*.pyc
+*.pyo
+
+# Editor artefacts
+*~
+*.swo
+*.swp
