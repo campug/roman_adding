@@ -51,8 +51,8 @@ class TestRomanAddingSubTests(unittest.TestCase):
 
     def test_adding(self):
 
-        for a in [1, 2]:
-            for b in [1, 2]:
+        for a in range(1, 2):
+            for b in range(1, 2):
                 ar = to_roman(a)
                 br = to_roman(b)
                 with self.subTest(ar=ar, br=br):
