@@ -21,3 +21,8 @@ over a large range.
 After writing it, it became obvious that this is really equivalent to putting
 the I, X, etc., values from both input numbers onto some sort of abacus, and
 then reading the result off again.
+
+It was also pointed out to me that I could sensibly have used a dictionary
+to hold the tallies, instead of individual variables, which is definitely
+true, and that doing that would have meant I didn't need the class, which
+would arguably be a lot simpler.
