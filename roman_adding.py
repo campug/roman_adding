@@ -51,6 +51,166 @@ def check_roman(s):
     if not all(x in ROMAN_DIGITS for x in s):
         raise ValueError('{!r} is not a sequence of I, V, X, L, C, D or M'.format(s))
 
+class RomanAdder(object):
+
+    def __init__(self):
+        self.clear()
+
+    def clear(self):
+        """Clear our internal accumulators.
+        """
+        self.accum_i = ''
+        self.accum_v = ''
+        self.accum_x = ''
+        self.accum_l = ''
+        self.accum_c = ''
+        self.accum_d = ''
+        self.accum_m = ''
+
+        self.accum_iv = ''
+        self.accum_ix = ''
+        self.accum_xl = ''
+        self.accum_xc = ''
+        self.accum_cd = ''
+        self.accum_cm = ''
+
+    def split(self, number):
+        """Split a roman number up into it parts.
+
+        Raises ValueError if 'number' contain any characters other than
+        "I", "V", "X", "L", "C", "D" or "M".
+        """
+        check_roman(number)
+        while number.endswith('I'):
+            number = number[:-1]
+            self.accum_i += 'I'
+
+        if number.endswith('IV'):
+            number = number[:-2]
+            self.accum_i += 'IIII'
+        while number.endswith('V'):
+            number = number[:-1]
+            self.accum_v += 'V'
+
+        if number.endswith('IX'):
+            number = number[:-2]
+            self.accum_i += 'IIII'
+            self.accum_v += 'V'
+        while number.endswith('X'):
+            number = number[:-1]
+            self.accum_x += 'X'
+
+        if number.endswith('XL'):
+            number = number[:-2]
+            self.accum_x += 'XXXX'
+        while number.endswith('L'):
+            number = number[:-1]
+            self.accum_l += 'L'
+
+        if number.endswith('XC'):
+            number = number[:-2]
+            self.accum_x += 'XXXX'
+            self.accum_l += 'L'
+        while number.endswith('C'):
+            number = number[:-1]
+            self.accum_c += 'C'
+
+        if number.endswith('CD'):
+            number = number[:-2]
+            self.accum_c += 'CCCC'
+        while number.endswith('D'):
+            number = number[:-1]
+            self.accum_d += 'D'
+
+        if number.endswith('CM'):
+            number = number[:-2]
+            self.accum_c += 'CCCC'
+            self.accum_d += 'D'
+        while number.endswith('M'):
+            number = number[:-1]
+            self.accum_m += 'M'
+
+    def add(self, number1, number2):
+        """Add two strings representing roman numbers.
+
+        For instance:
+
+          >>> adder = RomanAdder()
+          >>> adder.add('IV', 'V')
+          'IX'
+
+        Raises ValueError if the strings contain any characters other than
+        'I', 'V', 'X', 'L', 'C', 'D' or 'M'.
+        """
+        self.clear()
+        self.split(number1)
+        self.split(number2)
+
+        # Simple accumulations
+        while self.accum_i.endswith('IIIII'):
+            self.accum_i = self.accum_i[:-5]
+            self.accum_v += 'V'
+
+        while self.accum_v.endswith('VV'):
+            self.accum_v = self.accum_v[:-2]
+            self.accum_x += 'X'
+
+        while self.accum_x.endswith('XXXXX'):
+            self.accum_x = self.accum_x[:-5]
+            self.accum_l += 'L'
+
+        while self.accum_l.endswith('LL'):
+            self.accum_l = self.accum_l[:-2]
+            self.accum_c += 'C'
+
+        while self.accum_c.endswith('CCCCC'):
+            self.accum_c = self.accum_c[:-5]
+            self.accum_d += 'D'
+
+        while self.accum_d.endswith('DD'):
+            self.accum_d = self.accum_d[:-2]
+            self.accum_m += 'M'
+
+        # Subtractive values from two accumulators
+        if self.accum_v == 'V' and self.accum_i == 'IIII':
+            self.accum_ix = 'IX'
+            self.accum_v  = ''
+            self.accum_i  = ''
+
+        if self.accum_l == 'L' and self.accum_x == 'XXXX':
+            self.accum_xc = 'XC'
+            self.accum_l  = ''
+            self.accum_x  = ''
+
+        if self.accum_d == 'D' and self.accum_c == 'CCCC':
+            self.accum_cm = 'CM'
+            self.accum_d  = ''
+            self.accum_c  = ''
+
+        # Subtractive values from a single accumulator
+        if self.accum_i == 'IIII':
+            self.accum_iv = 'IV'
+            self.accum_i = ''
+
+        if self.accum_x == 'XXXX':
+            self.accum_xl = 'XL'
+            self.accum_x = ''
+
+        if self.accum_c == 'CCCC':
+            self.accum_cd = 'CD'
+            self.accum_c = ''
+
+        sum = (self.accum_m + self.accum_cm +
+               self.accum_d + self.accum_cd +
+               self.accum_c + self.accum_xc +
+               self.accum_l + self.accum_xl +
+               self.accum_x + self.accum_ix +
+               self.accum_v + self.accum_iv +
+               self.accum_i)
+
+        return sum
+
+
 def add(number1, number2):
     """Add two strings representing roman numbers.
 
@@ -60,17 +220,11 @@ def add(number1, number2):
       'IX'
 
     Raises ValueError if the strings contain any characters other than
-    'I', 'V', 'X', 'L', 'C', 'D' or 'M'
+    'I', 'V', 'X', 'L', 'C', 'D' or 'M'.
     """
-    check_roman(number1)
-    check_roman(number2)
+    adder = RomanAdder()
+    return adder.add(number1, number2)
 
-    sum = number1 + number2
-
-    if sum == 'IIII':
-        sum = 'IV'
-
-    return sum
 
 
 def main(args):

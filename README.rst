@@ -9,3 +9,15 @@ March 2017 - see us on meetup.com at https://www.meetup.com/CamPUG/
 
 See the docstring at the top of roman_adding.py for the aim of the kata,
 and see test_roman_adding.py for the unit tests.
+
+Tibs's solution
+---------------
+This was the simplest possible solution I could thing of. Clearly it's also
+very inefficient, as there's lots of adding of strings. Using lists would
+presumably be faster. For adding two roman numbers together, that doesn't
+really matter, but it does make the unit tests really slow when testing
+over a large range.
+
+After writing it, it became obvious that this is really equivalent to putting
+the I, X, etc., values from both input numbers onto some sort of abacus, and
+then reading the result off again.

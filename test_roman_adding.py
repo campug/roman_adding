@@ -51,8 +51,13 @@ class TestRomanAddingSubTests(unittest.TestCase):
 
     def test_adding(self):
 
-        for a in range(1, 2):
-            for b in range(1, 2):
+        for a in range(1, 3000):
+            for b in range(1, 3000):
+                # to_roman doesn't support numbers > 3000, so we shall have
+                # to ignore them. This is very wasteful of time, but it is
+                # very simple.
+                if a + b > 3000:
+                    continue
                 ar = to_roman(a)
                 br = to_roman(b)
                 with self.subTest(ar=ar, br=br):
