@@ -12,7 +12,7 @@ and see test_roman_adding.py for the unit tests.
 
 Tibs's solution
 ---------------
-This was the simplest possible solution I could thing of. Clearly it's also
+This was the simplest possible solution I could think of. Clearly it's also
 very inefficient, as there's lots of adding of strings. Using lists would
 presumably be faster. For adding two roman numbers together, that doesn't
 really matter, but it does make the unit tests really slow when testing
